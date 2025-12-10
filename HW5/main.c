@@ -57,7 +57,6 @@ void brake(struct Vehicle aVehicle);
 //                       Program Entry                       //
 ///////////////////////////////////////////////////////////////
 int main() {
-    // Create Vehicle object
     struct Vehicle janeCar;
     janeCar.status = IDLE;
     strncpy(janeCar.ownerName, "Jane", MAX_NAME_LENGTH);
@@ -68,7 +67,7 @@ int main() {
 
     struct Vehicle myCar;
     myCar.status = IDLE;
-    myCar.ownerName[0] = '\0'; // No owner name
+    myCar.ownerName[0] = '\0'; // no name
 
 
     // Test Jane's Car
