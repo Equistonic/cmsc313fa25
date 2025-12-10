@@ -9,11 +9,11 @@
 enum STATUS {
     IDLE,
     STARTING,
-    GAS,
+    ACCELERATING,
     BREAKING
 };
 
-const int MAX_NAME_LENGTH = 12;
+#define MAX_NAME_LENGTH 12
 
 struct Vehicle {
     enum STATUS status;
@@ -36,7 +36,7 @@ void printStatus(const struct Vehicle aVehicle);
 // Desc: Prints "Engine started!" to the console
 // Preconditions: None
 // Postconditions: None
-void startEngine(const struct Vehicle aVehicle);
+void startEngine(struct Vehicle aVehicle);
 
 
 // Name: accelerate
@@ -58,7 +58,35 @@ void brake(struct Vehicle aVehicle);
 ///////////////////////////////////////////////////////////////
 int main() {
     // Create Vehicle object
+    struct Vehicle janeCar;
+    janeCar.status = IDLE;
+    strncpy(janeCar.ownerName, "Jane", MAX_NAME_LENGTH);
+
+    struct Vehicle jackCar;
+    jackCar.status = IDLE;
+    strncpy(jackCar.ownerName, "Jack", MAX_NAME_LENGTH);
+
     struct Vehicle myCar;
+    myCar.status = IDLE;
+    myCar.ownerName[0] = '\0'; // No owner name
+
+
+    // Test Jane's Car
+    startEngine(janeCar);
+    accelerate(janeCar);
+    brake(janeCar);
+    printf("\n");
+
+    // Test Jack's Car
+    startEngine(jackCar);
+    accelerate(jackCar);
+    brake(jackCar);
+    printf("\n");
+
+    // Test My Car (matches output from template.cpp)
+    startEngine(myCar);
+    accelerate(myCar);
+    brake(myCar);
 
     return 0;
 }
@@ -74,8 +102,8 @@ void printStatus(const struct Vehicle aVehicle) {
         case STARTING:
             printf("Status: STARTING\n");
             break;
-        case GAS:
-            printf("Status: GAS\n");
+        case ACCELERATING:
+            printf("Status: ACCELERATING\n");
             break;
         case BREAKING:
             printf("Status: BREAKING\n");
@@ -87,28 +115,31 @@ void printStatus(const struct Vehicle aVehicle) {
 }
 
 
-void startEngine(const struct Vehicle aVehicle) {
+void startEngine(struct Vehicle aVehicle) {
     if (aVehicle.ownerName[0] != '\0') {
-        printf("Owner: %s's car: ", aVehicle.ownerName);
+        printf("%s's car: ", aVehicle.ownerName);
     }
 
+    aVehicle.status = STARTING;
     printf("Engine started!\n");
 }
 
 
 void accelerate(struct Vehicle aVehicle) {
     if (aVehicle.ownerName[0] != '\0') {
-        printf("Owner: %s's car: ", aVehicle.ownerName);
+        printf("%s's car: ", aVehicle.ownerName);
     }
 
+    aVehicle.status = ACCELERATING;
     printf("Car: Pressing gas pedal...\n");
 }
 
 
 void brake(struct Vehicle aVehicle) {
     if (aVehicle.ownerName[0] != '\0') {
-        printf("Owner: %s's car: ", aVehicle.ownerName);
+        printf("%s's car: ", aVehicle.ownerName);
     }
 
+    aVehicle.status = BREAKING;
     printf("Car: Applying brakes...\n");
 }
